@@ -5,10 +5,10 @@ from z3 import *
 
 def getOptimizer(r11, r12):
 	s=Optimize()
-	R11, R12, x11, x12 = Ints('R11 R12 x11 x12')
-	R21, R22, x21, x22 = Ints('R21 R22 x21 x22')
-	R31, R32, x31, x32 = Ints('R31 R32 x31 x32')
-	R41, R42, x41, x42 = Ints('R41 R42 x41 x42')
+	R11, R12, x11, x12, L11, L12 = Ints('R11 R12 x11 x12 L11 L12')
+	R21, R22, x21, x22, L21, L22 = Ints('R21 R22 x21 x22 L21 L22')
+	R31, R32, x31, x32, L31, L32 = Ints('R31 R32 x31 x32 L31 L32')
+	R41, R42, x41, x42, L41, L42 = Ints('R41 R42 x41 x42 L41 L42')
 	w21 = Int('w21')
 	w31, w32 = Ints('w31 w32')
 	w41, w42, w43 = Ints('w41 w42 w43')
@@ -120,19 +120,30 @@ def getOptimizer(r11, r12):
 	s.add(If(w32 == 3, w42 == 0, And(w42 >= 0, w42 <= 3)))
 
 
+	s.add(If(x11 >= 1, L11 == 1, L11 == 0))
+	s.add(If(x12 >= 1, L12 == 1, L12 == 0))
+	s.add(If(x21 >= 1, L21 == 1, L21 == 0))
+	s.add(If(x22 >= 1, L22 == 1, L22 == 0))
+	s.add(If(x31 >= 1, L31 == 1, L31 == 0))
+	s.add(If(x32 >= 1, L32 == 1, L32 == 0))
+	s.add(If(x41 >= 1, L41 == 1, L41 == 0))
+	s.add(If(x42 >= 1, L42 == 1, L42 == 0))
+
 	s.add(And(R11 == r11, R12 == r12))
 
-	return s
+	sampleLoading = s.minimize(L11+L21+L31+L41)
+	bufferLoading = s.minimize(L12+L22+L32+L42)
 
-
-for r in range(1, 128):
-	fp = open(f'/home/sparrow/Desktop/MTP/Codes/output/op{r}','w')
-	start = time.time()
-	s = getOptimizer(256-r, r)
+	fp = open(f'/home/sparrow/Desktop/IITG/MTP/Codes/MTP_IITG/output/op{r}','w')
 	if s.check() == unsat:
 		print ('unsat')
 	else:
 		print ('sat')
+		s.lower(sampleLoading)
 		lst = s.model()
 		for i in lst:
 			fp.write(str(i) + " = " + str(s.model()[i]) + '\n')
+
+
+for r in range(1, 128):
+	getOptimizer(256-r, r)

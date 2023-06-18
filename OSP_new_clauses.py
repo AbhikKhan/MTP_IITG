@@ -125,7 +125,7 @@ def getSolver(r11, r12):
 
 
 for i in range(1, 128):
-    fp = open(f'/home/sparrow/Desktop/MTP/Codes/output/op{i}','w')
+    fp = open(f'/home/sparrow/Desktop/IITG/MTP/Codes/MTP_IITG/output/op{i}','w')
     start = time.time()
     s = getSolver(256-i, i)
     if s.check() == unsat:

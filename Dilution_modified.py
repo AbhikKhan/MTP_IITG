@@ -21,19 +21,7 @@ def init():
     
 def finish():
     opfile.write('for r in range(1, 128):\n')
-        
-    opfile.write('\tfp = open(f\'/home/sparrow/Desktop/MTP/Codes/output/op{r}\',\'w\')\n')
-    opfile.write('\tstart = time.time()\n')
-    opfile.write('\ts = getOptimizer(256-r, r)\n')
-    opfile.write('\tif s.check() == unsat:\n')
-    opfile.write('\t\tprint (\'unsat\')\n')
-    opfile.write('\telse:\n')
-    opfile.write("\t\tprint (\'sat\')\n")
-    opfile.write("\t\tlst = s.model()\n")
-    opfile.write("\t\tfor i in lst:\n")
-    opfile.write("\t\t\tfp.write(str(i) + \" = \" + str(s.model()[i]) + '\\n')\n")
-    #opfile.write("    print time.time()-start \n")
-    
+    opfile.write('\tgetOptimizer(256-r, r)')
     opfile.close()
     
 def varDeclare(N,d,n):
@@ -46,12 +34,18 @@ def varDeclare(N,d,n):
             opString += f"R{i}{j}, "
         for j in range(1,n+1):
             opString += f"x{i}{j}, "
+        # adding loading variable
+        for j in range(1,n+1):
+            opString += f"L{i}{j}, "
         opString = opString[:-2]
         opString += " = Ints('"
         for j in range(1,n+1):
             opString += f"R{i}{j} "
         for j in range(1,n+1):
             opString += f"x{i}{j} "
+        # adiing loading variable
+        for j in range(1,n+1):
+            opString += f"L{i}{j} "
         opString = opString[:-1]
         opString += "')\n"
         opfile.write(opString)
@@ -190,18 +184,57 @@ def nonNegativityConstraints(N,d,n):
             opfile.write(opString) 
     opfile.write("\n\n")
 
-    # new constraints
+    # new constraints for current node and grand-parent sharing
     for i in range(2,d):
         # as only node-grand-parent sharing is considered
         opString = f"\ts.add(If(w{i}{i-1} == {N-1}, w{i+1}{i-1} == 0, And(w{i+1}{i-1} >= 0, w{i+1}{i-1} <= 3)))\n"
         opfile.write(opString) 
     opfile.write("\n\n")
 
-def setTarget(ratio):
-    opString = "\ts.add(And(R11 == r11, R12 == r12))\n\n\treturn s"
-    opString += "\n\n\n"
+# to add loading constraints
+def loadingConstraints(N,d,n):
+    opString = ''
+    for i in range(1,d+1):
+        # if xij == 1 Lij = 1 else Lij = 0
+        opString += f'\ts.add(If(x{i}1 >= 1, L{i}1 == 1, L{i}1 == 0))\n'
+        opString += f'\ts.add(If(x{i}2 >= 1, L{i}2 == 1, L{i}2 == 0))\n'
     opfile.write(opString)
-      
+    opfile.write('\n')
+
+def setTarget(ratio):
+    opString = "\ts.add(And(R11 == r11, R12 == r12))\n"
+    opString += "\n"
+    opfile.write(opString)
+
+def optimizationCriteria(N,d,n):
+    # adding optimization criteria
+    opString = f'\tsampleLoading = s.minimize('
+    for i in range(1, d+1):
+        opString += f'L{i}1+'
+    opString = opString[0:-1]
+    opString += ')\n'
+    opfile.write(opString)
+    opString = f'\tbufferLoading = s.minimize('
+    for i in range(1, d+1):
+        opString += f'L{i}2+'
+    opString = opString[0:-1]
+    opString += ')\n'
+    opfile.write(opString)
+    opfile.write('\n')
+
+def checkForSat():
+    # opfile.write('\tfp = open(f\'/home/sparrow/Desktop/MTP/Codes/output/op{r}\',\'w\')\n')
+    opfile.write('\tfp = open(f\'/home/sparrow/Desktop/IITG/MTP/Codes/MTP_IITG/output/op{r}\',\'w\')\n')
+    opfile.write('\tif s.check() == unsat:\n')
+    opfile.write('\t\tprint (\'unsat\')\n')
+    opfile.write('\telse:\n')
+    opfile.write("\t\tprint (\'sat\')\n")
+    opfile.write('\t\ts.lower(sampleLoading)\n')
+    opfile.write("\t\tlst = s.model()\n")
+    opfile.write("\t\tfor i in lst:\n")
+    opfile.write("\t\t\tfp.write(str(i) + \" = \" + str(s.model()[i]) + '\\n')\n\n\n")
+    
+
 def OSP(ratio,N,d):
     n = len(ratio)
     if sum(ratio) != N**d:
@@ -211,8 +244,11 @@ def OSP(ratio,N,d):
     #ratioConsistencyConstraints(N,d,n)
     ratioConsistencyConstraintsWithLinerarization(N,d,n)
     mixerConsistencyConstraints(N,d,n)
-    nonNegativityConstraints(N,d,n)  
+    nonNegativityConstraints(N,d,n)
+    loadingConstraints(N,d,n)
     setTarget(ratio)
+    optimizationCriteria(N,d,n)
+    checkForSat()
     finish()
     
     

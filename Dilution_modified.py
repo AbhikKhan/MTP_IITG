@@ -223,8 +223,8 @@ def optimizationCriteria(N,d,n):
     opfile.write('\n')
 
 def checkForSat():
-    # opfile.write('\tfp = open(f\'/home/sparrow/Desktop/MTP/Codes/output/op{r}\',\'w\')\n')
-    opfile.write('\tfp = open(f\'/home/sparrow/Desktop/IITG/MTP/Codes/MTP_IITG/output/op{r}\',\'w\')\n')
+    opfile.write('\tfp = open(f\'/home/sparrow/Desktop/MTP/Codes/output/op{r}\',\'w\')\n')
+    # opfile.write('\tfp = open(f\'/home/sparrow/Desktop/IITG/MTP/Codes/MTP_IITG/output/op{r}\',\'w\')\n')
     opfile.write('\tif s.check() == unsat:\n')
     opfile.write('\t\tprint (\'unsat\')\n')
     opfile.write('\telse:\n')

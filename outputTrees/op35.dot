@@ -1,0 +1,22 @@
+digraph Tree{
+	rankdir="BT"
+	x11 -> 1 [label = "2", color = "blue"];
+	x11 [label = "sample", shape = "box"];
+	1 [label = "221:35"];
+	2 -> 1 [label = "1", color = "black"];
+	x21 -> 2 [label = "3", color = "blue"];
+	x21 [label = "sample", shape = "box"];
+	2 [label = "57:7"];
+	x32 -> 3 [label = "1", color = "green"];
+	x32 [label = "buffer", shape = "box"];
+	3 -> 2 [label = "1", color = "black"];
+	3 -> 1 [label = "1", color = "red"];
+	3 [label = "9:7"];
+	4 -> 3 [label = "3", color = "black"];
+	x41 -> 4 [label = "3", color = "blue"];
+	x41 [label = "sample", shape = "box"];
+	x42 -> 4 [label = "1", color = "green"];
+	x42 [label = "buffer", shape = "box"];
+	4 [label = "3:1"];
+}
+

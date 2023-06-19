@@ -134,7 +134,7 @@ def getOptimizer(r11, r12):
 	sampleLoading = s.minimize(L11+L21+L31+L41)
 	bufferLoading = s.minimize(L12+L22+L32+L42)
 
-	fp = open(f'/home/sparrow/Desktop/IITG/MTP/Codes/MTP_IITG/output/op{r}','w')
+	fp = open(f'/home/sparrow/Desktop/MTP/Codes/output/op{r}','w')
 	if s.check() == unsat:
 		print ('unsat')
 	else:

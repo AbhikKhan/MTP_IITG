@@ -1,0 +1,12 @@
+digraph "DD" { 
+graph [ ordering = "out"];
+5001 -> 1[label = "3"];
+5002 -> 3[label = "3"];
+3 -> 2[label = "3"];
+2 -> 1[label = "1"];
+5001 [label = "[64, 0]",  shape = oval]
+5002 [label = "[0, 64]",  shape = oval]
+3 [label = "[1, 15]",  shape = oval]
+2 [label = "[7, 57]",  shape = oval]
+1 [label = "[199, 57]",  shape = oval]
+}

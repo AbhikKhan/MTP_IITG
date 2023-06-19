@@ -1,0 +1,3 @@
+DiGraph has no attribute edges_iter() and nodes_iter()
+instead use edges() nodes()
+use edges[u, v] instead of edges[u][v]

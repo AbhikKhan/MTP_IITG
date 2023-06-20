@@ -5,10 +5,10 @@ digraph Tree{
 	1 [label = "145:111"];
 	2 -> 1 [label = "1", color = "black"];
 	2 [label = "13:51"];
-	3 -> 1 [label = "1", color = "red"];
-	3 -> 2 [label = "1", color = "black"];
 	x32 -> 3 [label = "3", color = "green"];
 	x32 [label = "buffer", shape = "box"];
+	3 -> 2 [label = "1", color = "black"];
+	3 -> 1 [label = "1", color = "red"];
 	3 [label = "1:15"];
 	4 -> 2 [label = "3", color = "red"];
 	4 -> 3 [label = "1", color = "black"];

@@ -1,0 +1,18 @@
+digraph "DD" { 
+rankdir = "BT" 
+graph [ ordering = "out"];
+5001 -> 2[label = "1"];
+5001 -> 4[label = "2"];
+5002 -> 3[label = "1"];
+5002 -> 4[label = "2"];
+2 -> 1[label = "3"];
+3 -> 2[label = "3"];
+4 -> 1[label = "1"];
+4 -> 3[label = "3"];
+5001 [label = "[256, 0]",  shape = oval]
+5002 [label = "[0, 256]",  shape = oval]
+1 [label = "[134, 122]",  shape = oval]
+2 [label = "[34, 30]",  shape = oval]
+3 [label = "[6, 10]",  shape = oval]
+4 [label = "[2, 2]",  shape = oval]
+}

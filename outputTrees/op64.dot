@@ -8,8 +8,8 @@ digraph Tree{
 	x32 -> 3 [label = "2", color = "green"];
 	x32 [label = "buffer", shape = "box"];
 	3 [label = "4:12"];
-	4 -> 3 [label = "2", color = "black"];
 	4 -> 2 [label = "2", color = "red"];
+	4 -> 3 [label = "2", color = "black"];
 	x41 -> 4 [label = "2", color = "blue"];
 	x41 [label = "sample", shape = "box"];
 	x42 -> 4 [label = "2", color = "green"];

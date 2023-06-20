@@ -3,9 +3,9 @@ digraph Tree{
 	x11 -> 1 [label = "3", color = "blue"];
 	x11 [label = "sample", shape = "box"];
 	1 [label = "197:59"];
+	2 -> 1 [label = "1", color = "black"];
 	x22 -> 2 [label = "2", color = "green"];
 	x22 [label = "buffer", shape = "box"];
-	2 -> 1 [label = "1", color = "black"];
 	2 [label = "5:59"];
 	x32 -> 3 [label = "3", color = "green"];
 	x32 [label = "buffer", shape = "box"];

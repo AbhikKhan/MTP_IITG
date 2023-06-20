@@ -69,13 +69,15 @@ def printGraph(graph,filename):
     fp = open(filename,'w')
     string = 'digraph "DD" { \n' 
     fp.write(string)
+    string = 'rankdir = "BT" \n' 
+    fp.write(string)
     string = 'graph [ ordering = "out"];\n' 
     fp.write(string)
     for e in graph.edges():
         fp.write(str(e[0])+' -> '+str(e[1])+'[label = "%s"];\n' %(str(graph[e[0]][e[1]]['usedSegment'])))
         
     for v in graph.nodes():
-        fp.write('%s [label = "%s",  shape = oval]\n' %(v,str(graph.node[v]['ratio'])))
+        fp.write('%s [label = "%s",  shape = oval]\n' %(v,str(graph.nodes[v]['ratio'])))
         
     fp.write('}\n')          
     fp.close()    
@@ -83,10 +85,10 @@ def printGraph(graph,filename):
 
 
 
-factorList = [4,4,4]
+factorList = [4,4,4,4]
 
 #factorList = [2,5,5,2]
-
-d = len(factorList)
-seqGraph = genSeqGraph('op',factorList,d)
-printGraph(seqGraph,'op.dot')
+for r in range(1, 128):
+    d = len(factorList)
+    seqGraph = genSeqGraph(f'/home/sparrow/Desktop/MTP/Codes/MTP_IITG/dilution/outputs/op{r}',factorList,d)
+    printGraph(seqGraph,f'/home/sparrow/Desktop/MTP/Codes/MTP_IITG/dilution/outputDotFiles/op{r}.dot')

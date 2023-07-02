@@ -1,41 +1,57 @@
 from z3 import *
 from itertools import permutations
+import csv
 
-def get_all_possible_values(target_sum):
-    # Create Z3 variables for x1, x2, x3, and x4
-    x1 = Int('x1')
-    x2 = Int('x2')
-    x3 = Int('x3')
-    x4 = Int('x4')
-
+def get_all_possible_values(number_of_variables, target_sum, output_file):
     # Create a Z3 solver
     solver = Solver()
 
-    # Add constraints to the solver
-    solver.add(x1 > 0)
-    solver.add(x2 > 0)
-    solver.add(x3 > 0)
-    solver.add(x4 > 0)
-    solver.add(x1 + x2 + x3 + x4 == target_sum)
+    # Create Z3 variables for x1, x2, x3, and x4
+    x = []
+    for i in range(0, number_of_variables):
+        var_name = f'x{i+1}'
+        var = Int(var_name)
+        solver.add(var > 0)
+        x.append(var)
 
-    # Iterate over all satisfying models
-    while solver.check() == sat:
-        # Get the model
-        model = solver.model()
+    # Adding constraint
+    solver.add(Sum(x) == target_sum)
 
-        values = [model.eval(var).as_long() for var in [x1, x2, x3, x4]]
+    with open(output_file, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
 
-        print(f"x1 = {values[0]}, x2 = {values[1]}, x3 = {values[2]}, x4 = {values[3]}")
+        header = [f'x{i+1}' for i in range(number_of_variables)]
+        writer.writerow(header)
 
-        # Add constraint to exclude the current solution
-        allPermuations = list(permutations(values))
-        for per in allPermuations:
-            solver.add(Or(x1 != per[0], x2 != per[1], x3 != per[2], x4 != per[3]))
+        iter = 500
+
+        # Iterate over all satisfying models
+        while (solver.check() == sat) & (iter > 0):
+            # Get the model
+            iter = iter-1
+            model = solver.model()
+
+            values = [model.eval(var).as_long() for var in x]
+
+            # write in CSV file
+            writer.writerow(values)
+
+            # Print the values dynamically based on the number of variables
+            # variables_str = ', '.join(f'x{i+1} = {val}' for i, val in enumerate(values))
+            # print(variables_str)
+
+            # Add constraint to exclude the current solution and it's permutations
+            allPermuations = list(permutations(values))
+            for per in allPermuations:
+                constraint = Or(*[var != val for var, val in zip(x, per)])
+                solver.add(constraint)
 
 # Get and print all possible values
 def main():
-    total = input("Sum: ")
-    get_all_possible_values(total)
+    variables = int(input("Number of variables: "))
+    total = int(input("Sum: "))
+    fileName = input("File name: ")
+    get_all_possible_values(variables, total, fileName)
 
 # If the it is called from this function
 if __name__ == "__main__":

@@ -498,6 +498,8 @@ def footprint(treelist,mxx):
     
         
     global treevec
+    global nodecount
+
     treevec=[] #[edgeValue,u,v] and it contains tree directly from genmix(hda(root))
     treevec=treevec_temp
     # [treevec.append(x) for x in treevec_temp if x not in treevec]
@@ -562,12 +564,11 @@ def footprint(treelist,mxx):
     # print("Ind load-->",IND_LOAD)
     #count nodes
     # mxnode=-1
-    # global nodecount
     nodecount=0
     mxnode=0
     for xy in range(len(treevec)):
         if int(treevec[xy][1][1]) >= mxnode:
-            global nodecount
+            # global nodecount
             nodecount=int(treevec[xy][1][1])
             mxnode=max(nodecount,mxnode)
         if len(treevec[xy][1])==3 and int(treevec[xy][1][1]+treevec[xy][1][2])>=mxnode:
@@ -960,8 +961,7 @@ def find_seq():
     leaves=[]
     traverse=[]
     
-    
-    
+
     rs=level_wise_nodes(adj_list)
     # print("LEVEL FOR RUNNING-->",rs)
     rs.reverse()
@@ -1044,8 +1044,8 @@ def find_seq():
     foldername="FRAMES"
     dir="frames"
     import os
-    for f in os.listdir(dir):# CLEAR THE FOLDER
-        os.remove(os.path.join(dir, f))
+    for f in os.listdir(foldername):# CLEAR THE FOLDER
+        os.remove(os.path.join(foldername, f))
         
     frame=0
     COLOR=["WHITE","ORANGE","YELLOW","GREEN","PINK","BLUE","VIOLET","PURPLE","BROWN"] #COLORS FOR R1 , R2 , R3 , R4 ...
@@ -1159,7 +1159,6 @@ def find_seq():
                         [x,y]=new_list[len(new_list)-1]
                         mt[x][y]=0
                         sh_path= sh_path + shortest_path(mt,new_list[len(new_list)-1],[9,0])#[x,y] to outlet
-                        
                         ##############################
                         OPR=OPR+1
                         TIME=TIME+1

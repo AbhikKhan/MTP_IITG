@@ -83,7 +83,7 @@ mixture8 =[(1,228), (2,36), (3,259), (4,98), (5,403)]
 
 
 
-mix=mixture7                 #[(1, 43), (2, 435), (3, 79), (4, 217), (5, 250)]
+mix=mixture8                 #[(1, 43), (2, 435), (3, 79), (4, 217), (5, 250)]
 
 ######################################genmix
 # root1=(genMix(mixture1,4))
@@ -94,9 +94,11 @@ root3=(genMix(mix,4))###
 # root4=(genMix(mixture4,4))
 # l = leftistTree((root3))
 # l=ntm(l)
+
 viewTree(root3, "genMix.png")
-l = leftistTree((root3))
-viewTree(l, "genMix_leftFactored.png")
+# l = leftistTree((root3))
+# viewTree(l, "genMix_leftFactored.png")
+
 # image = Image.open('output.png')
 # image.show()
 
@@ -154,7 +156,7 @@ viewTree(l, "genMix_leftFactored.png")
 
 lft = leftistTree((root3))##
 # r=createGraphFromPydot(leftFactoredTree)
-treelist=getNodesEdges(lft)##
+treelist=getNodesEdges(root3)##
 # 
 
 # viewTree(lft)##

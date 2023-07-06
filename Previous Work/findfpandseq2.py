@@ -200,7 +200,7 @@ def makeworse(level,nodereagents,adj_list,mxr):
         lst=[]
         for e in ((level[l])):
             # print("node-->",e)
-            lst.extend(nodereagents[e])
+            lst.extend(nodereagents[e]) # get all reagents in a level
        
         
        
@@ -483,7 +483,7 @@ def footprint(treelist,mxx):
 
 
     #CONVERT Genmix list-->ADJ LIST ##################################################################################
-    
+    global IND_LOAD
     treevec_temp=[]
     for e in range(len(treelist[1])):
         if type(treelist[1][e][1][1])!=str:
@@ -510,15 +510,17 @@ def footprint(treelist,mxx):
     
     # find max node number
     for x in treevec:
-        if int(x[1][1])>mxnode:
-            mxnode=int(x[1][1])
-        if len(x[1])==3 and int(x[1][1]+x[1][2])>=mxnode:
-             # print("lenth--->",3)
-             nodecount=int(x[1][1]+x[1][2])
-             mxnode=max(nodecount,mxnode)
+        # print(x[1][1:])
+        if int(x[1][1:])>mxnode:
+            mxnode=int(x[1][1:])
+        # if len(x[1])==3 and int(x[1][1]+x[1][2])>=mxnode:
+        #      # print("lenth--->",3)
+        #      nodecount=int(x[1][1]+x[1][2])
+        #      mxnode=max(nodecount,mxnode)
     
     # print("maxnode-->",mxnode)
     
+    # <<<<<<<<================================Redundant============================>>>>>>>>>>>>
     for y in treevec:
         if y[1][0] == "m":
             y[1]="M"+ str(int(y[1][1])+mxnode+1)
@@ -526,24 +528,24 @@ def footprint(treelist,mxx):
             y[2]="M"+ str(int(y[2][1])+mxnode+1)            
     
     # print("TREEVEC AFTER CHANGE")
-    # print(treevec) #after making m-->M
-    
-    
+    print(treevec) #after making m-->M
     
     
     nodereagents=[[] for _ in range(50)]
     for ee in range(len(treevec)):
         if (treevec[ee][2][0])=="R":
-            # list=[1,treelist[1][e][0][1],"R"+str(treelist[1][e][1][1])]#[edgeValue,u,v]
-            if len(treevec[ee][1])!=3:
-                # global nodereagents
-                nodereagents[int(treevec[ee][1][1])].append(treevec[ee][2])
-            elif len(treevec[ee][1])==3:
-                # global nodereagents
-                nodereagents[int(treevec[ee][1][1] + treevec[ee][1][2])].append(treevec[ee][2])
+            nodereagents[int(treevec[ee][1][1:])].append(treevec[ee][2])
+            #<<<<<<<<<=================================================================>>>>>>>>>>>
+            # # list=[1,treelist[1][e][0][1],"R"+str(treelist[1][e][1][1])]#[edgeValue,u,v]
+            # if len(treevec[ee][1])!=3:
+            #     # global nodereagents
+            #     nodereagents[int(treevec[ee][1][1])].append(treevec[ee][2])
+            # elif len(treevec[ee][1])==3:
+            #     # global nodereagents
+            #     nodereagents[int(treevec[ee][1][1] + treevec[ee][1][2])].append(treevec[ee][2])
     
     
-    # print("nodeR-->",nodereagents)
+    print("nodeR-->",nodereagents)
             
     # # COUNT IND_cycles
     # r_count=[0 for _ in range(len(mxr)+1)]
@@ -567,14 +569,14 @@ def footprint(treelist,mxx):
     nodecount=0
     mxnode=0
     for xy in range(len(treevec)):
-        if int(treevec[xy][1][1]) >= mxnode:
+        if int(treevec[xy][1][1:]) >= mxnode:
             # global nodecount
-            nodecount=int(treevec[xy][1][1])
+            nodecount=int(treevec[xy][1][1:])
             mxnode=max(nodecount,mxnode)
-        if len(treevec[xy][1])==3 and int(treevec[xy][1][1]+treevec[xy][1][2])>=mxnode:
-            # print("lenth--->",3)
-            nodecount=int(treevec[xy][1][1]+treevec[xy][1][2])
-            mxnode=max(nodecount,mxnode)
+        # if len(treevec[xy][1])==3 and int(treevec[xy][1][1]+treevec[xy][1][2])>=mxnode:
+        #     # print("lenth--->",3)
+        #     nodecount=int(treevec[xy][1][1]+treevec[xy][1][2])
+        #     mxnode=max(nodecount,mxnode)
             
             # print("# of nodes-->",nodecount)
     
@@ -599,20 +601,22 @@ def footprint(treelist,mxx):
     # treevec.sort(reverse = True) # Sort according to edgeValue decending   
     for i in treevec:
         if i[2][0]!="R":
-            if len(i[1])!=3 and len(i[2])!=3:
-                add_edge(int(i[1][1]),int(i[2][1]))
-            if len(i[1])==3 and len(i[2])!=3:
-                add_edge(int(i[1][1]+i[1][2]),int(i[2][1]))
-            if len(i[1])!=3 and len(i[2])==3:
-                add_edge(int(i[1][1]),int(i[2][1]+i[2][2]))
-            if len(i[1])==3 and len(i[2])==3:
-                add_edge(int(i[1][1]+i[1][2]),int(i[2][1]+i[2][2]))
+            add_edge(int(i[1][1:]),int(i[2][1:]))
+            #<<<<<<<<<<=====================================================>>>>>>>>>>>>
+            # if len(i[1])!=3 and len(i[2])!=3:
+            #     add_edge(int(i[1][1]),int(i[2][1]))
+            # if len(i[1])==3 and len(i[2])!=3:
+            #     add_edge(int(i[1][1]+i[1][2]),int(i[2][1]))
+            # if len(i[1])!=3 and len(i[2])==3:
+            #     add_edge(int(i[1][1]),int(i[2][1]+i[2][2]))
+            # if len(i[1])==3 and len(i[2])==3:
+            #     add_edge(int(i[1][1]+i[1][2]),int(i[2][1]+i[2][2]))
             
     #     # print("\n")
     
     
     # for node in adj_list:
-    #     print(node, " ---> ", [i for i in adj_list[node]])
+    #     print(node, "--->", [i for i in adj_list[node]])
     
     # print(adj_list)#contins only the mixing nodes######################################<-----
     # print("LEVEL WISE NODES-->")
@@ -634,9 +638,9 @@ def footprint(treelist,mxx):
                    r_count[rg]=r_count[rg]+1 
                    # print("r_count-->",r_count)
                 
-    global IND_LOAD
+    # global IND_LOAD
     IND_LOAD=sum(r_count)
-    global treevec
+    # global treevec
     dtree(treevec)
     dot_file_path = 'modified_graph.dot'
     output_png_path = 'output_wgenmix.png'
@@ -646,7 +650,7 @@ def footprint(treelist,mxx):
     permute(level,nodereagents,adj_list,mxr,-1)
     
     #####################################################################################
-    global treevec
+    # global treevec
     dtree(treevec)
     dot_file_path = 'modified_graph.dot'
     output_png_path = 'output2.png'

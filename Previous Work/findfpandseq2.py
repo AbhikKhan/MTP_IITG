@@ -528,7 +528,7 @@ def footprint(treelist,mxx):
             y[2]="M"+ str(int(y[2][1])+mxnode+1)            
     
     # print("TREEVEC AFTER CHANGE")
-    print(treevec) #after making m-->M
+    # print(treevec) #after making m-->M
     
     
     nodereagents=[[] for _ in range(50)]
@@ -545,7 +545,7 @@ def footprint(treelist,mxx):
             #     nodereagents[int(treevec[ee][1][1] + treevec[ee][1][2])].append(treevec[ee][2])
     
     
-    print("nodeR-->",nodereagents)
+    # print("nodeR-->",nodereagents)
             
     # # COUNT IND_cycles
     # r_count=[0 for _ in range(len(mxr)+1)]
@@ -623,9 +623,9 @@ def footprint(treelist,mxx):
     # print(level_wise_nodes(adj_list))
     level=level_wise_nodes(adj_list)
     # level, nodereagents, adj_list =  
-    #####################################################################################
+    # <<<<<<<<<<<<<<<==================================>>>>>>>>>>>>>>>>>>>>>
     makeworse(level, nodereagents, adj_list, mxr)
-    
+    #####################################################################################
     # COUNT IND_cycles
     r_count=[0 for _ in range(len(mxr)+1)]
     # print(r_count)
@@ -646,8 +646,8 @@ def footprint(treelist,mxx):
     output_png_path = 'output_wgenmix.png'
     generate_png_from_dot(dot_file_path, output_png_path)
     
-    #####################################################################################
-    permute(level,nodereagents,adj_list,mxr,-1)
+    # <<<<<<<<<<<<<<<==================================>>>>>>>>>>>>>>>>>>>>>
+    # permute(level,nodereagents,adj_list,mxr,-1)
     
     #####################################################################################
     # global treevec
@@ -1096,7 +1096,7 @@ def find_seq():
     # print("NODES HAVING SAME COORDINATES...")                    
     # print(clash)
     
-    
+    loadingPaths = []
     # print("run_it--->" ,run_it)
     # run_it=[8,7,6,5,4,3,2,1]
     mt=[]# the changing grid in these operations                       
@@ -1297,7 +1297,7 @@ def find_seq():
                 
                 mt=get_matrix()
                 sh_path= sh_path + shortest_path(mt,toload[len(toload)-1],[9,0])#[x,y] to outlet
-                
+                loadingPaths.append(len(sh_path))
                 ##############################
                 OPR=OPR+1
                 TIME=TIME+1
@@ -1400,10 +1400,11 @@ def find_seq():
     print("INDIVIDUAL LOADING CYCLES-->",IND_LOAD)
     print("OPTIMIZED LOADING CYCLES-->",OPT_LOAD)
     print("# CELLS IN FOOTprint-->",FP)
+    print("# LOADING PATH LENGTHS-->",loadingPaths)
     
     #save the data
     data=[{'MIXTURE':mxr,'MIXTURE LEN':len(mxr),'TIME':TIME,'WASTE':WASTE,
            'INDIVIDUAL LOADING CYCLES':IND_LOAD,'OPTIMIZED LOADING CYCLES':OPT_LOAD,'CELLS IN FOOTPRINT':FP}]
     file_path = 'genmix_new.xlsx'
     
-    save_data_to_excel(data, file_path)
+    # save_data_to_excel(data, file_path)

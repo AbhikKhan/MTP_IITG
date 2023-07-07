@@ -98,14 +98,14 @@ mix=mixture8                 #[(1, 43), (2, 435), (3, 79), (4, 217), (5, 250)]
 # root1=(genMix(mixture1,4))
 # root2=(genMix(mixture2,4))
 
-root3=(genMix(mix,4))###
-height=getHeight(root3)###
-print('genmix tree height', height)
+# root3=(genMix(mix,4))###
+# height=getHeight(root3)###
+# print('genmix tree height', height)
 # root4=(genMix(mixture4,4))
 # l = leftistTree((root3))
 # l=ntm(l)
 
-viewTree(root3, "genMix.png")
+# viewTree(root3, "genMix.png")
 # l = leftistTree((root3))
 # viewTree(l, "genMix_leftFactored.png")
 
@@ -126,47 +126,47 @@ viewTree(root3, "genMix.png")
 # info3 = ntm(hda(root3))
 # info4 = ntm(hda(root4))
 
-# file_path = 'RATIOS_1.txt'
-# import ast
-# with open(file_path, 'r') as file:
-#     line = file.readline()
-#     c=0
-#     while line:
-#         c=c+1
-#         print(c)
-#         dir="frames2"
-#         # import os
-#         # for f in os.listdir(dir):# CLEAR THE FOLDER
-#         #     os.remove(os.path.join(dir, f))
-#         # print(line)
-#         # import subprocess
-#         # import os
-#         # import signal
-#         # p=subprocess.Popen(['python','findfpandseq2.py'])
-#         # p.terminate()
-#         # p.wait()
+file_path = '5ratios.txt'
+import ast
+with open(file_path, 'r') as file:
+    line = file.readline()
+    c=0
+    while line:
+        c=c+1
+        print(c)
+        dir="frames2"
+        # import os
+        # for f in os.listdir(dir):# CLEAR THE FOLDER
+        #     os.remove(os.path.join(dir, f))
+        # print(line)
+        # import subprocess
+        # import os
+        # import signal
+        # p=subprocess.Popen(['python','findfpandseq2.py'])
+        # p.terminate()
+        # p.wait()
         
         
         
-#         mix=ast.literal_eval(line)
-#         print(mix)
-#         root3=(genMix(mix,4))
-#         lft = leftistTree((root3))
-#         # lft = ((root3))
-#         # # r=createGraphFromPydot(leftFactoredTree)
-#         treelist=getNodesEdges(lft)
+        mix=ast.literal_eval(line)
+        print(mix)
+        root3=(genMix(mix,4))
+        lft = leftistTree((root3))
+        # lft = ((root3))
+        # # r=createGraphFromPydot(leftFactoredTree)
+        treelist=getNodesEdges(lft)
 
 
-#         viewTree(lft)
-#         footprint(treelist,mix)
-#         find_seq()
-#         line = file.readline()
-#         if c==  1000:     #1000-240-62-41-59-14:     # 1000-240:
-#             break
+        viewTree(lft)
+        footprint(treelist,mix)
+        find_seq()
+        line = file.readline()
+        if c ==  4:     #1000-240-62-41-59-14:     # 1000-240:
+            break
 
-lft = leftistTree((root3))##
+# lft = leftistTree((root3))##
 # r=createGraphFromPydot(leftFactoredTree)
-treelist=getNodesEdges(root3)##
+# treelist=getNodesEdges(root3)##
 # 
 # for node in treelist[0]:
 #     print(node)
@@ -176,7 +176,7 @@ treelist=getNodesEdges(root3)##
 # viewTree(lft)##
 # image = Image.open('output.png')##
 # image.show()
-footprint(treelist,mix)##
+# footprint(treelist,mix)##
 # find_seq()##
 # leftFactoredTree = leftistTree(hda(root2))
 # viewTree(leftFactoredTree)

@@ -3,8 +3,8 @@ digraph Tree{
 	1 [label = "231:25"];
 	2 -> 1 [label = "1", color = "black"];
 	2 [label = "51:13"];
-	3 -> 1 [label = "3", color = "red"];
 	3 -> 2 [label = "1", color = "black"];
+	3 -> 1 [label = "3", color = "red"];
 	x31 -> 3 [label = "3", color = "blue"];
 	x31 [label = "sample", shape = "box"];
 	3 [label = "15:1"];

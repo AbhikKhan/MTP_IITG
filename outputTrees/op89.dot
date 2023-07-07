@@ -7,10 +7,10 @@ digraph Tree{
 	x22 [label = "buffer", shape = "box"];
 	2 -> 1 [label = "1", color = "black"];
 	2 [label = "27:37"];
+	3 -> 1 [label = "1", color = "red"];
 	x32 -> 3 [label = "3", color = "green"];
 	x32 [label = "buffer", shape = "box"];
 	3 -> 2 [label = "1", color = "black"];
-	3 -> 1 [label = "1", color = "red"];
 	3 [label = "3:13"];
 	4 -> 3 [label = "1", color = "black"];
 	4 -> 2 [label = "2", color = "red"];

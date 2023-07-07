@@ -124,7 +124,7 @@ def _viewPydot(pydot, fileName):
     display(plt)
     
     
-def viewTree(root, fileName):
+def viewTree(root, fileName = "output.png"):
     _viewPydot(_createTree(root), fileName)#takes P
     
 

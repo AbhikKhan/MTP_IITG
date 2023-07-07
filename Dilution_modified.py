@@ -24,6 +24,8 @@ def init():
 
 def finish():
     opfile.write("for r in range(1, 128):\n")
+    opfile.write('\tif r%4 == 0:\n')
+    opfile.write('\t\tcontinue\n')
     opfile.write("\tgetOptimizer(256-r, r)")
     opfile.close()
 

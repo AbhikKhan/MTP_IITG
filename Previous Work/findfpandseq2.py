@@ -74,6 +74,18 @@ def generate_tree_dot(treevec):
         dot_file.write(dot_file_content)
 
 
+# <<<<<<<<<<<<<<<<=================================================>>>>>>>>>>>>>>>>>>>>>>>>>
+def bendsInPath(path):
+    k = 0
+    # print(path)
+    # min 3 path length required to develop bending
+    for i in range(2, len(path)):
+        if (path[i][0] != path[i-2][0]) & (path[i][1] != path[i-2][1]):
+            k+=1
+    
+    return k
+
+
 
 
 
@@ -647,7 +659,7 @@ def footprint(treelist,mxx):
     generate_png_from_dot(dot_file_path, output_png_path)
     
     # <<<<<<<<<<<<<<<==================================>>>>>>>>>>>>>>>>>>>>>
-    # permute(level,nodereagents,adj_list,mxr,-1)
+    permute(level,nodereagents,adj_list,mxr,-1)
     
     #####################################################################################
     # global treevec
@@ -1097,6 +1109,7 @@ def find_seq():
     # print(clash)
     
     loadingPaths = []
+    totalBends = []
     # print("run_it--->" ,run_it)
     # run_it=[8,7,6,5,4,3,2,1]
     mt=[]# the changing grid in these operations                       
@@ -1296,8 +1309,10 @@ def find_seq():
                         sh_path = sh_path + shortest_path(mt,toload[p],toload[p+1])
                 
                 mt=get_matrix()
+                # <<<<<<<<<<<<<<<<<=================================================>>>>>>>>>>>>>>>>>>>>>
                 sh_path= sh_path + shortest_path(mt,toload[len(toload)-1],[9,0])#[x,y] to outlet
                 loadingPaths.append(len(sh_path))
+                totalBends.append(bendsInPath(sh_path))
                 ##############################
                 OPR=OPR+1
                 TIME=TIME+1
@@ -1400,7 +1415,8 @@ def find_seq():
     print("INDIVIDUAL LOADING CYCLES-->",IND_LOAD)
     print("OPTIMIZED LOADING CYCLES-->",OPT_LOAD)
     print("# CELLS IN FOOTprint-->",FP)
-    print("# LOADING PATH LENGTHS-->",loadingPaths)
+    print("# LOADING PATH LENGTHS-->",sum(loadingPaths))
+    print("# LOADING PATH BENDS-->",sum(totalBends))
     
     #save the data
     data=[{'MIXTURE':mxr,'MIXTURE LEN':len(mxr),'TIME':TIME,'WASTE':WASTE,

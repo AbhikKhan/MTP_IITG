@@ -98,16 +98,20 @@ mix=mixture8                 #[(1, 43), (2, 435), (3, 79), (4, 217), (5, 250)]
 # root1=(genMix(mixture1,4))
 # root2=(genMix(mixture2,4))
 
-# root3=(genMix(mix,4))###
-# height=getHeight(root3)###
-# print('genmix tree height', height)
+root3=(genMix(mix,4))###
+height=getHeight(root3)###
+print('genmix tree height', height)
+
 # root4=(genMix(mixture4,4))
 # l = leftistTree((root3))
 # l=ntm(l)
 
-# viewTree(root3, "genMix.png")
-# l = leftistTree((root3))
-# viewTree(l, "genMix_leftFactored.png")
+viewTree(root3, "genMix.png")
+l = leftistTree((root3))
+viewTree(l, "genMix_leftFactored.png")
+
+hl = hda(root3)
+viewTree(hl, "genMix_hda.png")
 
 # image = Image.open('output.png')
 # image.show()
@@ -161,7 +165,7 @@ with open(file_path, 'r') as file:
         footprint(treelist,mix)
         find_seq()
         line = file.readline()
-        if c ==  4:     #1000-240-62-41-59-14:     # 1000-240:
+        if c ==  1:     #1000-240-62-41-59-14:     # 1000-240:
             break
 
 # lft = leftistTree((root3))##

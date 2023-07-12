@@ -1,5 +1,6 @@
 Coordinates = {}
 nextMixPosition = [-1,-1,1,1,-1,0,0,1,0,-1]
+levelWiseSharing = []
 
 class Coordinate:
     def __init__(self, x: int, y: int):
@@ -64,15 +65,38 @@ class Mixture:
         return f"[{self._top_left}] [{self._top_right}]\n[{self._bottom_left}] [{self._bottom_right}]"
 
 
-def nextStep(childCoord, level):
+def nextStep(x, y, level):
     if level == 0:
         return
-    
+    '''
+        see the four coordinates
+        If any coordinate is present in the coordinates then
+            make w_coordinate["x y"]_level = 1
+    '''
+    for key in Coordinates:
+        print(key, '->', Coordinates[key])
+    fluidsInCells = {}
+    if f'{x, y}' in Coordinates:
+        fluidsInCells[Coordinates[f'{x, y}']] += 1
+
+    if f'{x+1, y}' in Coordinates:
+        fluidsInCells[Coordinates[f'{x+1, y}']] += 1
+
+    if f'{x, y+1}' in Coordinates:
+        fluidsInCells[Coordinates[f'{x, y+1}']] += 1
+
+    if f'{x+1, y+1}' in Coordinates:
+        fluidsInCells[Coordinates[f'{x+1, y+1}']] += 1
+
+    print(fluidsInCells)
+
+
+    mix = Mixture(x, y, level)
     for i in range(len(nextMixPosition)-1):
-        nextStep([childCoord[0]+nextMixPosition[i], childCoord[1]+nextMixPosition[i+1]], level-1)
+        nextStep(x + nextMixPosition[i], y + nextMixPosition[i+1], level-1)
 
 def main():
-    nextStep([0,0],2)
+    nextStep(0, 0, 2)
 
 
 if __name__ == "__main__":
